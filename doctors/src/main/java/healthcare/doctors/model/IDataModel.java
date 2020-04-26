@@ -10,7 +10,7 @@ public interface IDataModel {
 	
 	public boolean connectionChecker(Connection MYSQLcon);
 	
-	public List<DoctorDTO> getAllDoctors(String ALL);
+	public DoctorDTO getAllDoctors(String ALL);
 	public String SelectDocId(String regNO);
 	public DoctorDTO SelectDocById(String id);
 	

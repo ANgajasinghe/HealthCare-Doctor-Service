@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./lib/jquery-3.5.0.min.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="./app.css">
+    <title>Health care - Doctor Service</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-12">
+                <form>
+                    <div class="form-group">
+                        <label for="doc_reg_no">Doc reg no</label>
+                        <input type="text" class="form-control" aria-describedby="emailHelp" id="doc_reg_no"
+                            placeholder="D00000" required />
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="doc_reg_no">First name</label>
+                            <input type="text" class="form-control" placeholder="Saman" id="doc_first_name">
+                        </div>
+                        <div class="col">
+                            <label for="doc_reg_no">Last name</label>
+                            <input type="text" class="form-control" placeholder="Kumara" id="doc_last_name">
+                        </div>
+                    </div>
+                    Address
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Saman" id="doc_first_name">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Kumara" id="doc_last_name">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <table class="table" id="doc_grid">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Doc reg no</th>
+                        <th scope="col">Specification</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Tp - 01</th>
+                        <th scope="col">Tp - 02</th>
+                        <th scope="col">Tp - 03</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <script src="./lib/bootstrap/js/bootstrap.js"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>

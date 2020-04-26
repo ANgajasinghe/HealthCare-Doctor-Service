@@ -5,17 +5,24 @@ import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class GlobalAuth implements ContainerRequestFilter  {
+public class GlobalAuth implements ContainerRequestFilter,ContainerResponseFilter   {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		
 		System.out.println("calling "+requestContext.getUriInfo().getBaseUri());
 		System.out.println("Headers " + requestContext.getHeaders());
+		
+		
+		
+		
+		
 		
 //		List<String> authHeader =  requestContext.getHeaders().get("allow");
 //		
@@ -33,6 +40,16 @@ public class GlobalAuth implements ContainerRequestFilter  {
 //											.build();
 //		
 //		requestContext.abortWith(unauthResponse);//not go through this filter 
+		
+	}
+
+	@Override
+	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
+			throws IOException {
+		responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
+        responseContext.getHeaders().add("Access-Control-Allow-Headers","origin, content-type, accept, authorization");
+        responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
+        responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 		
 	}
 	

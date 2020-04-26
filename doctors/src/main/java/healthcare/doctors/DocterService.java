@@ -25,7 +25,7 @@ public class DocterService {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DoctorDTO> getAllDoctors(@QueryParam("type") String ALL) {
+	public DoctorDTO getAllDoctors(@QueryParam("type") String ALL) {
 		return dm.getAllDoctors(ALL);
 	}
 	

@@ -29,8 +29,9 @@ public class DoctorModel implements IDataModel {
 	}
 
 	@Override
-	public List<DoctorDTO> getAllDoctors(String ALL) {
+	public DoctorDTO getAllDoctors(String ALL) {
 		List<DoctorDTO> allDocList = new ArrayList<DoctorDTO>();
+		DoctorDTO docObj = new DoctorDTO();
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		DoctorDTO Gdto = new DoctorDTO();
 		if (this.connectionChecker(MYSQLcon)) {
@@ -58,10 +59,7 @@ public class DoctorModel implements IDataModel {
 					dto.setDoc_reg_no(rs.getString("doc_reg_no"));
 					dto.setDoc_first_name(rs.getString("doc_first_name"));
 					dto.setDoc_last_name(rs.getString("doc_last_name"));
-					dto.setDoc_address_no(rs.getString("doc_address_no"));
-					dto.setDoc_address_lane1(rs.getString("doc_address_lane1"));
-					dto.setDoc_address_lane2(rs.getString("doc_address_lane2"));
-					dto.setDoc_address_lane3(rs.getString("doc_address_lane3"));
+					dto.setDoc_address(rs.getString("doc_address"));
 					dto.setDoc_city(rs.getString("doc_city"));
 					dto.setDoc_tp1(rs.getString("doc_tp1"));
 					dto.setDoc_tp2(rs.getString("doc_tp2"));
@@ -71,16 +69,21 @@ public class DoctorModel implements IDataModel {
 					dto.setSpecification_id(rs.getInt("doc_specification_id"));
 					allDocList.add(dto);
 				}
-
-				return allDocList;
+				docObj.setResponse_status(1);
+				docObj.setDoc_list(allDocList);
+				
+				return docObj;
 
 			} catch (SQLException e) {
+				
+				docObj.setDoc_list(allDocList);
 				ErrorDTO eDto = new ErrorDTO();
 				eDto.setERROR_CODE(e.getErrorCode());
 				eDto.setERROR_NAME(e.getMessage());
-				Gdto.setError(eDto);
-				allDocList.add(Gdto);
-				return allDocList;
+				
+				docObj.setResponse_status(0);
+				docObj.setError(eDto);
+				return docObj;
 			} finally {
 				try {
 					MYSQLcon.close();

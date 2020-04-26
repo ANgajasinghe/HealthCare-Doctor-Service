@@ -11,6 +11,7 @@ public class DoctorDTO {
 	private String doc_reg_no;
 	private String doc_first_name;
 	private String doc_last_name;
+	private String doc_address;
 	private String doc_address_no;
 	private String doc_address_lane1;
 	private String doc_address_lane2;
@@ -79,6 +80,14 @@ public class DoctorDTO {
 
 	public void setDoc_last_name(String doc_last_name) {
 		this.doc_last_name = doc_last_name;
+	}
+
+	public String getDoc_address() {
+		return doc_address;
+	}
+
+	public void setDoc_address(String doc_address) {
+		this.doc_address = doc_address;
 	}
 
 	public String getDoc_address_no() {
@@ -322,6 +331,29 @@ public class DoctorDTO {
 		Error = error;
 	}
 
+	//doc list
+	private List<DoctorDTO> doc_list;
+	private Integer response_status;
+	
+	public List<DoctorDTO> getDoc_list() {
+		return doc_list;
+	}
+
+	public void setDoc_list(List<DoctorDTO> doc_list) {
+		this.doc_list = doc_list;
+	}
+
+	public Integer getResponse_status() {
+		return response_status;
+	}
+
+	public void setResponse_status(Integer response_status) {
+		this.response_status = response_status;
+	}
+
+
+
+	
 
 
 	
