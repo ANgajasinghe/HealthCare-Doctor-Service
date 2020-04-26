@@ -41,7 +41,6 @@ function InitUIElement(){
     var tr = '';
     $.each(jsonList,function (key,value) { 
         tr = $('<tr/>');
-        tr.append('<td>'+value.doc_id+'</td>');
         tr.append('<td>'+value.doc_reg_no+'</td>');
         tr.append('<td>'+value.specification_id+'</td>');
         tr.append('<td>'+value.doc_first_name+'</td>');
@@ -53,7 +52,13 @@ function InitUIElement(){
         tr.append('<td>'+value.doc_tp3 +'</td>');
         tr.append('<td>'+value.doc_address+'</td>');
         tr.append('<td>'+value.doc_city+'</td>');
-        tr.append('<td>'+value.doc_status_id+'</td>');
+        tr.append("<td><input name='btnRemove' type='button' value='Remove'"+
+        "class='btnRemove btn btn-danger' data-doc_id='" + value.doc_id + "'>" +
+       "</td>");
+       tr.append("<td><input name='btnUpdate' type='button' value='Update'"+
+       "class='btn btn-secondary' data-doc_id='" + value.doc_id + "'>" +
+      "</td>");
+
         InitUIElement().grid.append(tr);
     });
     return;
