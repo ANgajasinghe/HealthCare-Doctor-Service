@@ -49,7 +49,7 @@ public class ConnectionBuilder {
 
 	}
 	
-	public Connection MYSQLConnection()
+	public Connection MYSQLConnection() throws Exception
 	{
 		try {
 			ConnectionDTO cDto = this.ReadCfg();
@@ -59,8 +59,8 @@ public class ConnectionBuilder {
 
 			return MYSQLcon;
 		} catch (Exception e) {
-			System.out.println("Akalanka" + e);
-			return null;
+			throw e;
+			
 		}
 	}
 	

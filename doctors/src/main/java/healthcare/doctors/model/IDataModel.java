@@ -11,11 +11,12 @@ public interface IDataModel {
 	public boolean connectionChecker(Connection MYSQLcon);
 	
 	public DoctorDTO getAllDoctors(String ALL);
-	public String SelectDocId(String regNO);
+	public DoctorDTO SelectDocId(String regNO);
 	public DoctorDTO SelectDocById(String id);
 	
-	public String insertIntoDoctors(DoctorDTO doctorDTOs);
-	public boolean insertIntoDocHospital(String Hospitals,String RegNo);
+	public DoctorDTO insertIntoDoctors(DoctorDTO doctorDTOs);
+	
+	public DoctorDTO insertIntoDocHospital(String Hospitals,String RegNo);
 	
 	
 	public String DocWorkAssign(DoctorDTO doctorDTO);

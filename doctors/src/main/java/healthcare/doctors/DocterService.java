@@ -40,7 +40,7 @@ public class DocterService {
 	@POST
 	@Path("add")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String insertIntoDoctors(DoctorDTO doctorDTOs) {
+	public DoctorDTO insertIntoDoctors(DoctorDTO doctorDTOs) {
 		return dm.insertIntoDoctors(doctorDTOs);
 	}
 	
