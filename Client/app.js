@@ -8,17 +8,32 @@ function  validateInit(response) {
     var resultSet = response;
     if (resultSet.response_status === 0) {
         console.log(resultSet);
-        return "Healthcare Doctor Service is Down at the morment";
+        return "Insert name ";
     }
     return true;     
 }
 
 function validateForm(){
-
+    //get all form elements
+    var formArray = InitUIElement().saveForm.serializeArray();
+    var errorList = "";
+    for (var i = 0; i < formArray.length; i++){
+        if(formArray[i]['value'] === "" || formArray[i]['value'] === "-1"
+        && formArray[i]['name'] !== "doc_tp3"
+        && formArray[i]['name'] !== "doc_id"
+        ){
+            errorList = errorList + "<p>" + formArray[i]['name'] + " is Can not empty please fill it </p>";
+        }
+    }
+    InitUIElement().alerts.warning.show().html(errorList);
+    if(errorList !== ""){
+        return false;
+    }
+    return true
 }
 
-//CONTROLLER=====================================================================================
 
+//CONTROLLER=====================================================================================
 function Init() {  
     $.ajax({
         type: "GET",
@@ -26,9 +41,8 @@ function Init() {
         contentType: "application/json",
         dataType: "json",
         success: function(response){
-            
-            
             if(validateInit(response)){
+               
                 InitGrid(response.doc_list);
             }
         },
@@ -48,8 +62,13 @@ function Init() {
             console.log(textStatus);
         }
     });
+
+    //Set Alerts
+    InitAterts();
+
 }
 
+//set moddel according to Update and add button 
 $(document).on('click' , '#btnUpdate',function(event) {
     //access Data attr from button 
     var doc_id = $(this).data().doc_id;
@@ -71,44 +90,44 @@ $(document).on('click' , '#btnUpdate',function(event) {
 
 
 });
-
-
-
 $("#btnAdd").on('click', function () {
+    InitAterts();
     SetModelUI(null);
 });
 
+//------------Model button action-----------
 $('#modelBtn').on('click', function () {
-    var form = InitUIElement().form;
-    if(form.doc_id.val() === ""){
-        //save
-
-        SaveDoctorInformation();
+    //-------Identify Save button---------------
+    if(InitUIElement().form.doc_id.val() === ""){ //implement save action 
+        if(validateForm() === true){
+            SaveDoctorInformation();
+        }else{
+            return;
+        }    
     }
-    else{
+    else{ //Implement Update action 
         console.log(form.doc_id.val());
         //SaveDoctorInformation();
     }
 
+   
+    
 });
+
+//----------Remove Alerts--------------
+$('table').on('click', function () {
+        InitAterts();
+});
+$('.alert').on('click', function () {
+        InitAterts();
+});
+
+
+
 
 function SaveDoctorInformation() {
    var obj  = InitUIElement().saveForm.serializeArray();
    var formVal = FormToJSON(obj);
-//    var formVal = {
-//     doc_address: "214/33,Kandy,Madapatha",
-//     doc_city: "Piliyanadala",
-//     doc_email: "Kumara@fff.com",
-//     doc_first_name: "Supun",
-//     doc_last_name: "dilshan",
-//     doc_reg_no: "D9000",
-//     doc_tp1: "5558858",
-//     doc_tp2: "5558588",
-//     doc_tp3: "5858585858",
-//     specification_id: "2"
-//    }
-
-   console.log(formVal);
 
     $.ajax({
         type:"POST",
@@ -117,8 +136,12 @@ function SaveDoctorInformation() {
         dataType: "json",
         data: JSON.stringify(formVal),
         success: function (response) {
-            console.log(response)
-            Init();
+            if(validateInit(response) === true){
+                InitGrid(response.doc_list);
+            }
+            else{
+
+            }
         },
         error: function (jqXhr, textStatus, errorMessage) {
             console.log(textStatus);
@@ -166,11 +189,14 @@ function InitUIElement(){
             doc_tp2: $("#doc_tp2"),
             doc_tp3: $("#doc_tp3"),
             specification_id:$("#specification_id")
+        },
+        alerts:{
+            warning : $("#alert_warning")
         }
     };
 
     return DOMobj;
-}
+};
 
  function InitGrid(jsonList) {
     InitUIElement().grid_body.empty();
@@ -204,14 +230,13 @@ function InitUIElement(){
 
 };
 
-
 function InitDropDown(jsonList){
     var option = '';
     $.each(jsonList, function (indexInArray, value) { 
          option = option + ('<option value='+value.specification_id+'>'+value.specification_name+'</option>');
     });
     InitUIElement().drpdown.append(option);
-}
+};
 
 function SetModelUI(doc_id){
     document.querySelector('form').reset();
@@ -229,6 +254,15 @@ function SetModelUI(doc_id){
                                    .addClass("btn-success");
     }
     return;
+};
+
+function InitAterts(value , CssClass){
+    if(this.value == null){
+        InitUIElement().alerts.warning.empty().hide();
+    } else{
+        
+    }
+    
 }
 
 

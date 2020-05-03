@@ -14,6 +14,9 @@
 
 <body>
     <div class="container mt-5">
+        <div class="alert alert-warning" role="alert" id="alert_warning">
+        </div>
+        
         <div class="row">
             <div class="col-12 text-center">
                 <button type="button" id="btnAdd" class="btn btn-success" data-title="Add" data-toggle="modal"
@@ -133,7 +136,7 @@
                         </div>
                     </div>
                     <div class="modal-footer ">
-                        <input type="button" class="btn btn-success btn-lg" id="modelBtn" style="width: 100%;" value="save">
+                        <input type="button" class="btn btn-success btn-lg" data-dismiss="modal" id="modelBtn" style="width: 100%;" value="save">
                         
                     </div>
                 </form>

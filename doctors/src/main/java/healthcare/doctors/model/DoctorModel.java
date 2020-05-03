@@ -245,10 +245,16 @@ public class DoctorModel implements IDataModel {
 
 				pStatement.execute();
 
-				return docObj;
+				return this.getAllDoctors(null);
 
 			} catch (SQLException e) {
 				e.printStackTrace();
+				ErrorDTO eDto = new ErrorDTO();
+				eDto.setERROR_CODE(e.getErrorCode());
+				eDto.setERROR_NAME(e.getMessage());
+
+				docObj.setResponse_status(0);
+				docObj.setError(eDto);
 				return docObj;
 			} finally {
 				try {
