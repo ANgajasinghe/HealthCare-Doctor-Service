@@ -7,25 +7,26 @@ $(document).ready(function() {
 function  validateInit(response) {
     var resultSet = response;
     if (resultSet.response_status === 0) {
-        console.log(resultSet);
-        return "Insert name ";
+        InitAterts(response.error.ERROR_NAME,"alert-warning");
+        return "false";
     }
     return true;     
 }
 
+//validte
 function validateForm(){
     //get all form elements
-    var formArray = InitUIElement().saveForm.serializeArray();
+    var formArray = DOMobj().saveForm.serializeArray();
     var errorList = "";
     for (var i = 0; i < formArray.length; i++){
-        if(formArray[i]['value'] === "" || formArray[i]['value'] === "-1"
+        if((formArray[i]['value'] === "" || formArray[i]['value'] === "-1")
         && formArray[i]['name'] !== "doc_tp3"
         && formArray[i]['name'] !== "doc_id"
         ){
             errorList = errorList + "<p>" + formArray[i]['name'] + " is Can not empty please fill it </p>";
         }
     }
-    InitUIElement().alerts.warning.show().html(errorList);
+    DOMobj().alerts.warning.show().html(errorList);
     if(errorList !== ""){
         return false;
     }
@@ -74,7 +75,7 @@ $(document).on('click' , '#btnUpdate',function(event) {
     var doc_id = $(this).data().doc_id;
     SetModelUI(doc_id);
     
-    var form = InitUIElement().form;
+    var form = DOMobj().form;
 
     form.doc_id.val(doc_id);
     form.doc_reg_no.val($(this).closest("tr").find('td:eq(0)').text());
@@ -90,15 +91,45 @@ $(document).on('click' , '#btnUpdate',function(event) {
 
 
 });
+
+$(document).on('click' , '#btnUpdate',function(event) {
+    //access Data attr from button 
+    var doc_id = $(this).data().doc_id;
+    SetModelUI(doc_id);
+    
+    var form = DOMobj().form;
+
+    form.doc_id.val(doc_id);
+    form.doc_reg_no.val($(this).closest("tr").find('td:eq(0)').text());
+    form.specification_id.val($(this).closest("tr").find('td:eq(1)').text());
+    form.doc_first_name.val($(this).closest("tr").find('td:eq(3)').text());
+    form.doc_last_name.val($(this).closest("tr").find('td:eq(4)').text());
+    form.doc_email.val($(this).closest("tr").find('td:eq(5)').text());
+    form.doc_tp1.val($(this).closest("tr").find('td:eq(6)').text());
+    form.doc_tp2.val($(this).closest("tr").find('td:eq(7)').text());
+    form.doc_tp3.val($(this).closest("tr").find('td:eq(8)').text());
+    form.doc_address.val($(this).closest("tr").find('td:eq(9)').text());
+    form.doc_city.val($(this).closest("tr").find('td:eq(10)').text());
+
+
+});
+
+$(document).on('click' , '#btnDelete',function(event) {
+    var doc_id = $(this).data().doc_id;
+    var form = DOMobj().formDel;
+    form.doc_id.val(doc_id);
+});
+
+
 $("#btnAdd").on('click', function () {
     InitAterts();
     SetModelUI(null);
 });
 
 //------------Model button action-----------
-$('#modelBtn').on('click', function () {
+$(DOMobj().buttons.save).on('click', function () {
     //-------Identify Save button---------------
-    if(InitUIElement().form.doc_id.val() === ""){ //implement save action 
+    if(DOMobj().form.doc_id.val() === ""){ //implement save action 
         if(validateForm() === true){
             SaveDoctorInformation();
         }else{
@@ -110,9 +141,18 @@ $('#modelBtn').on('click', function () {
         //SaveDoctorInformation();
     }
 
-   
+});
+
+//------------Remove Button action----------
+$(DOMobj().buttons.delete).on('click', function () {
+  
+    console.log(DOMobj().formDel.doc_id.val())
+    
     
 });
+
+
+
 
 //----------Remove Alerts--------------
 $('table').on('click', function () {
@@ -126,7 +166,7 @@ $('.alert').on('click', function () {
 
 
 function SaveDoctorInformation() {
-   var obj  = InitUIElement().saveForm.serializeArray();
+   var obj  = DOMobj().saveForm.serializeArray();
    var formVal = FormToJSON(obj);
 
     $.ajax({
@@ -138,10 +178,9 @@ function SaveDoctorInformation() {
         success: function (response) {
             if(validateInit(response) === true){
                 InitGrid(response.doc_list);
+                InitAterts("New Doctor Added Successfully" ,"alert-success")
             }
-            else{
-
-            }
+            
         },
         error: function (jqXhr, textStatus, errorMessage) {
             console.log(textStatus);
@@ -163,12 +202,12 @@ function FormToJSON(formArray) {//serialize data function
     });
 
     return oJSON;
-  }
+}
 
 //UI CONTROLLER==================================================================================
 
 
-function InitUIElement(){
+function DOMobj(){
     var DOMobj = {
         grid   : $("#doc_grid"),
         grid_body:$("#doc_grid_body"),
@@ -176,6 +215,7 @@ function InitUIElement(){
         addBtn : $("#btnAdd"),
         modelHedding : $("#Add-heading"),
         modelBtn : $("#modelBtn"),
+        modelBtn1 : $("#modelBtn1"),
         saveForm : $("#form"),
         form:{
             doc_id :$("#doc_id"),
@@ -190,8 +230,16 @@ function InitUIElement(){
             doc_tp3: $("#doc_tp3"),
             specification_id:$("#specification_id")
         },
+        formDel:{
+            doc_id :$("#doc_idD"),
+        },
         alerts:{
             warning : $("#alert_warning")
+        },
+        buttons:{
+            delete: $('#modelBtnRemove'),
+            save: $('#modelBtn')
+            
         }
     };
 
@@ -199,7 +247,7 @@ function InitUIElement(){
 };
 
  function InitGrid(jsonList) {
-    InitUIElement().grid_body.empty();
+    DOMobj().grid_body.empty();
     var tr = '';
     $.each(jsonList,function (key,value) { 
         tr = $('<tr/>');
@@ -220,11 +268,11 @@ function InitUIElement(){
         '<i class="fas fa-edit"></i></button></p>'+
        '</td>');
         tr.append('<td><p data-placement="top" data-toggle="tooltip" title="Delete">'+
-        '<button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" data-doc_id='+value.doc_id+'>'+
+        '<button id="btnDelete" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" data-doc_id='+value.doc_id+'>'+
         '<i class="fas fa-trash"></i></button></p>'+
         '</td>');
 
-        InitUIElement().grid.append(tr);
+        DOMobj().grid.append(tr);
     });
     return;
 
@@ -235,21 +283,21 @@ function InitDropDown(jsonList){
     $.each(jsonList, function (indexInArray, value) { 
          option = option + ('<option value='+value.specification_id+'>'+value.specification_name+'</option>');
     });
-    InitUIElement().drpdown.append(option);
+    DOMobj().drpdown.append(option);
 };
 
 function SetModelUI(doc_id){
     document.querySelector('form').reset();
     
     if(doc_id !== null){
-        $(InitUIElement().modelHedding).html("Edit Your Detail"); 
-        $(InitUIElement().modelBtn).removeClass("btn-success")
+        $(DOMobj().modelHedding).html("Edit Your Detail"); 
+        $(DOMobj().modelBtn).removeClass("btn-success")
                                    .html("Update")
                                    .addClass("btn-warning");
     }
     else{
-        $(InitUIElement().modelHedding).html("Add a doctor"); 
-        $(InitUIElement().modelBtn).removeClass("btn-warning")
+        $(DOMobj().modelHedding).html("Add a doctor"); 
+        $(DOMobj().modelBtn).removeClass("btn-warning")
                                    .html("Save")
                                    .addClass("btn-success");
     }
@@ -257,10 +305,22 @@ function SetModelUI(doc_id){
 };
 
 function InitAterts(value , CssClass){
-    if(this.value == null){
-        InitUIElement().alerts.warning.empty().hide();
-    } else{
-        
+    if(value == null){
+        DOMobj().alerts.warning.empty().hide();
+    } 
+    else if(CssClass === "alert-warning"){
+        DOMobj().alerts.warning.removeClass('alert-danger')
+                                      .addClass(CssClass)
+                                      .show();
+
+        DOMobj().alerts.warning.html( 'Can not save ' + value);                              
+    }
+    else if(CssClass === "alert-success"){
+        DOMobj().alerts.warning.removeClass('alert-danger')
+        .addClass(CssClass)
+        .show();
+
+        DOMobj().alerts.warning.html( value ); 
     }
     
 }
