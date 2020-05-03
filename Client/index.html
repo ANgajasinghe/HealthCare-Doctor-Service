@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/8418d9c9c2.js" crossorigin="anonymous"></script>
     <script src="./lib/jquery-3.5.0.min.js"></script>
-
+    <link rel="stylesheet" href="./lib/fontawesome/css/all.css" />
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-select.css" />
     <link rel="stylesheet" href="./app.css" />
@@ -16,11 +15,11 @@
 <body>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-12 text-center"> 
-            <button type="button" id="btnAdd" class="btn btn-success" data-title="Add" data-toggle="modal"
-                data-target="#add" title="Add a doctor">
-                <i class="fas fa-plus-square"></i> <span> Add a new doctor </span>
-            </button>
+            <div class="col-12 text-center">
+                <button type="button" id="btnAdd" class="btn btn-success" data-title="Add" data-toggle="modal"
+                    data-target="#add" title="Add a doctor">
+                    <i class="fas fa-plus-square"></i> <span> Add a new doctor </span>
+                </button>
             </div>
 
 
@@ -37,7 +36,8 @@
                     <thead>
                         <th scope="col">Doc reg no</th>
                         <th scope="col">Spec</th>
-                        <th scope="col">Full name</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Tp - 01</th>
                         <th scope="col">Tp - 02</th>
@@ -45,15 +45,14 @@
                         <th scope="col">Address</th>
                         <th scope="col">City</th>
                     </thead>
-                    <tbody>
+                    <tbody id="doc_grid_body">
 
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
-    </div>
+
 
 
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -64,37 +63,80 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <i class="fas fa-window-close"></i></button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form id="form">
+                    <div class="modal-body">
+
                         <div class="form-group">
-                            <label for="doc_reg_no">Doctor Register No</label>
-                            <input type="text" class="form-control" 
-                            id="doc_reg_no" 
-                            placeholder="D0000">
+                            <input type="text" class="form-control" id="doc_id" name="doc_id" hidden>
                         </div>
+                        <div class="form-group">
+                            <label for="doc_reg_no"><b>Doctor Register No</b></label>
+                            <input type="text" class="form-control" id="doc_reg_no" name="doc_reg_no"
+                                placeholder="D0000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specification_id"><b>Doctor Specification</b></label>
+                            <div class="form-group">
+                                <select class="form-control" id="specification_id" name="specification_id" required>
+                                    <option value="-1">--Select--</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_first_name"><b>First Name</b></label>
+                            <input type="text" class="form-control" id="doc_first_name" name="doc_first_name"
+                                placeholder="Saman" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_last_name"><b>Last Name</b></label>
+                            <input type="text" class="form-control" id="doc_last_name" name="doc_last_name"
+                                placeholder="Kumara" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_email"><b>Email</b></label>
+                            <input type="email" class="form-control" id="doc_email" name="doc_email"
+                                placeholder="example@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_tp1"><b>Telephone 01</b></label>
+                            <input type="number" class="form-control" id="doc_tp1" name="doc_tp1"
+                                placeholder="0112456789" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_tp2"><b>Telephone 02</b></label>
+                            <input type="number" class="form-control" id="doc_tp2" name="doc_tp2"
+                                placeholder="0772456789" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_tp3"><b>Telephone 03</b></label>
+                            <input type="number" class="form-control" id="doc_tp3" name="doc_tp3"
+                                placeholder="0712456789">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_address"><b>Address</b></label>
+                            <input type="text" class="form-control" id="doc_address" name="doc_address"
+                                placeholder="CB 106/107 , Street # 11 , Colombo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc_city"><b>City</b></label>
+                            <input type="text" class="form-control" id="doc_city" name="doc_city" placeholder="Colombo"
+                                required>
+                        </div>
+                    </div>
+                    <div class="modal-footer ">
+                        <input type="button" class="btn btn-success btn-lg" id="modelBtn" style="width: 100%;" value="save">
                         
-                        <div class="form-group">
-
-                            <input class="form-control " type="text" placeholder="Irshad">
-                        </div>
-                        <div class="form-group">
-                            <textarea rows="2" class="form-control"
-                                placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <select class="selectpicker" multiple data-live-search="true">
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
-                            </select>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer ">
-                    <button type="button" class="btn btn-success btn-lg" id="modelBtn" style="width: 100%;">
-                        Save </button>
-                </div>
+                    </div>
+                </form>
             </div>
             <!-- /.modal-content -->
         </div>
@@ -107,9 +149,9 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <i class="fas fa-window-close"></i></button>
-                    <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
                 </div>
                 <div class="modal-body">
 
@@ -124,9 +166,9 @@
                             class="glyphicon glyphicon-remove"></span> No</button>
                 </div>
             </div>
-         
+
         </div>
-        
+
     </div>
 
 

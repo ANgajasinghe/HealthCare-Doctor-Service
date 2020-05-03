@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import dto.DoctorDTO;
 import dto.ErrorDTO;
 import utility.ConnectionBuilder;
@@ -31,7 +30,7 @@ public class DoctorModel implements IDataModel {
 	@Override
 	public DoctorDTO getAllDoctors(String ALL) {
 		List<DoctorDTO> allDocList = new ArrayList<DoctorDTO>();
-		
+
 		DoctorDTO docObj = new DoctorDTO();
 		Connection MYSQLcon = null;
 		try {
@@ -40,13 +39,12 @@ public class DoctorModel implements IDataModel {
 			docObj.setDoc_list(allDocList);
 			ErrorDTO eDto = new ErrorDTO();
 			eDto.setERROR_NAME(e1.getMessage());
-			
+
 			docObj.setResponse_status(0);
 			docObj.setError(eDto);
 			return docObj;
 		}
-		
-		
+
 		DoctorDTO Gdto = new DoctorDTO();
 		if (this.connectionChecker(MYSQLcon)) {
 
@@ -55,11 +53,10 @@ public class DoctorModel implements IDataModel {
 			sBuilder.append("*\t");
 			sBuilder.append("FROM\n");
 			sBuilder.append("doctors");
-			
-			if (ALL !=null && ALL.equals("active")) {
+
+			if (ALL != null && ALL.equals("active")) {
 				sBuilder.append(" \n WHERE doc_status_id = 1");
 			}
-			
 
 			String qurtString = sBuilder.toString();
 
@@ -85,16 +82,83 @@ public class DoctorModel implements IDataModel {
 				}
 				docObj.setResponse_status(1);
 				docObj.setDoc_list(allDocList);
-				
+
 				return docObj;
 
 			} catch (SQLException e) {
-				
+
 				docObj.setDoc_list(allDocList);
 				ErrorDTO eDto = new ErrorDTO();
 				eDto.setERROR_CODE(e.getErrorCode());
 				eDto.setERROR_NAME(e.getMessage());
-				
+
+				docObj.setResponse_status(0);
+				docObj.setError(eDto);
+				return docObj;
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return null;
+	}
+
+	@Override
+	public DoctorDTO getAllSpecifications() {
+		List<DoctorDTO> allSpecList = new ArrayList<DoctorDTO>();
+
+		DoctorDTO docObj = new DoctorDTO();
+		Connection MYSQLcon = null;
+		try {
+			MYSQLcon = cBuilder.MYSQLConnection();
+		} catch (Exception e1) {
+			docObj.setDoc_list(allSpecList);
+			ErrorDTO eDto = new ErrorDTO();
+			eDto.setERROR_NAME(e1.getMessage());
+
+			docObj.setResponse_status(0);
+			docObj.setError(eDto);
+			return docObj;
+		}
+
+		DoctorDTO Gdto = new DoctorDTO();
+		if (this.connectionChecker(MYSQLcon)) {
+
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("SELECT\n");
+			sBuilder.append("*\t");
+			sBuilder.append("FROM\n");
+			sBuilder.append("doc_specification");
+
+			String qurtString = sBuilder.toString();
+
+			try {
+				Statement stmt = MYSQLcon.createStatement();
+				ResultSet rs = stmt.executeQuery(qurtString);
+
+				while (rs.next()) {
+					DoctorDTO dto = new DoctorDTO();
+					dto.setSpecification_id(rs.getInt("specification_id"));
+					dto.setSpecification_name(rs.getString("specification_name"));
+					allSpecList.add(dto);
+				}
+				docObj.setResponse_status(1);
+				docObj.setDoc_list(allSpecList);
+
+				return docObj;
+
+			} catch (SQLException e) {
+
+				ErrorDTO eDto = new ErrorDTO();
+				eDto.setERROR_CODE(e.getErrorCode());
+				eDto.setERROR_NAME(e.getMessage());
+
 				docObj.setResponse_status(0);
 				docObj.setError(eDto);
 				return docObj;
@@ -114,6 +178,7 @@ public class DoctorModel implements IDataModel {
 
 	@Override
 	public DoctorDTO insertIntoDoctors(DoctorDTO doctorDTOs) {
+		System.out.println(doctorDTOs);
 		DoctorDTO docObj = new DoctorDTO();
 		Connection MYSQLcon = null;
 		try {
@@ -122,7 +187,7 @@ public class DoctorModel implements IDataModel {
 			e1.printStackTrace();
 			ErrorDTO eDto = new ErrorDTO();
 			eDto.setERROR_NAME(e1.getMessage());
-			
+
 			docObj.setResponse_status(0);
 			docObj.setError(eDto);
 			return docObj;
@@ -141,7 +206,7 @@ public class DoctorModel implements IDataModel {
 //			dto.setDoc_email(rs.getString("doc_email"));
 //			dto.setDoc_status_id(rs.getInt("doc_status_id"));
 //			dto.setSpecification_id(rs.getInt("doc_specification_id"));
-			
+
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("INSERT INTO doctors ( \n");
 			sBuilder.append("doc_reg_no,");
@@ -167,7 +232,7 @@ public class DoctorModel implements IDataModel {
 				pStatement.setString(3, doctorDTOs.getDoc_last_name() != null ? doctorDTOs.getDoc_last_name() : null);
 
 				pStatement.setString(4, doctorDTOs.getDoc_address() != null ? doctorDTOs.getDoc_address() : null);
-	
+
 				pStatement.setString(5, doctorDTOs.getDoc_city() != null ? doctorDTOs.getDoc_city() : null);
 
 				pStatement.setString(6, doctorDTOs.getDoc_tp1() != null ? doctorDTOs.getDoc_tp1() : null);
@@ -178,12 +243,10 @@ public class DoctorModel implements IDataModel {
 				pStatement.setInt(10, doctorDTOs.getDoc_status_id() != null ? doctorDTOs.getDoc_status_id() : 0);
 				pStatement.setInt(11, doctorDTOs.getSpecification_id() != null ? doctorDTOs.getSpecification_id() : 0);
 
-				pStatement.execute(); 
-				
-                this.insertIntoDocHospital(doctorDTOs.getHospital_list(), doctorDTOs.getDoc_reg_no());
-                
-                return docObj;
-				
+				pStatement.execute();
+
+				return docObj;
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 				return docObj;
@@ -202,73 +265,15 @@ public class DoctorModel implements IDataModel {
 
 	@Override
 	public DoctorDTO insertIntoDocHospital(String Hospitals, String RegNo) {
-		
-		DoctorDTO docObj = new DoctorDTO();
-		
-		if (Hospitals == null || RegNo == null) {
-			return docObj;
-		} else {
-			//String docId = this.SelectDocId(RegNo);
-			String docId = "ANF";
-			if (docId != null) {
-				
-				Connection MYSQLcon = null;
-				try {
-					MYSQLcon = cBuilder.MYSQLConnection();
-				} catch (Exception e1) {
-					ErrorDTO eDto = new ErrorDTO();
-					eDto.setERROR_NAME(e1.getMessage());
-					
-					docObj.setResponse_status(0);
-					docObj.setError(eDto);
-					return docObj;
-				}
-				String[] hostArr = Hospitals.split(",");
-
-				StringBuilder sBuilder = new StringBuilder();
-				sBuilder.append("INSERT INTO doc_hospital ( \n");
-				sBuilder.append("doc_id,\n");
-				sBuilder.append("hostpital_id )\n");
-				sBuilder.append("VALUES(?,?)");
-
-				try {
-
-					for (int i = 0; i < hostArr.length; i++) {
-						String qurtString = sBuilder.toString();
-						PreparedStatement pStatement = MYSQLcon.prepareStatement(qurtString);
-						pStatement.setInt(1, Integer.parseInt(docId));
-						pStatement.setInt(2, Integer.parseInt(hostArr[i]));
-						pStatement.execute();
-						
-							return docObj;
-						
-					}
-
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return docObj;
-				} finally {
-					try {
-						MYSQLcon.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-			if (true) {
-				return docObj;
-			}
-		}
-		return docObj;
+		// TODO Auto-generated method stub
+		return null;
 
 	}
 
 	@Override
 	public DoctorDTO SelectDocId(String regNO) {
 		if (regNO != null) {
-			
+
 			DoctorDTO docObj = new DoctorDTO();
 			Connection MYSQLcon = null;
 			try {
@@ -276,12 +281,12 @@ public class DoctorModel implements IDataModel {
 			} catch (Exception e1) {
 				ErrorDTO eDto = new ErrorDTO();
 				eDto.setERROR_NAME(e1.getMessage());
-				
+
 				docObj.setResponse_status(0);
 				docObj.setError(eDto);
 				return docObj;
 			}
-			
+
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("SELECT\n");
 			sBuilder.append("doc_id\n");
@@ -578,6 +583,6 @@ public class DoctorModel implements IDataModel {
 //				 currectDoctorDTO.getSpecification_id():dto.getSpecification_id());
 //		
 //		return dto;
-	//}
+	// }
 
 }

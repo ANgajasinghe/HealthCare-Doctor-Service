@@ -20,10 +20,7 @@ public class GlobalAuth implements ContainerRequestFilter,ContainerResponseFilte
 		System.out.println("Headers " + requestContext.getHeaders());
 		
 		
-		
-		
-		
-		
+
 //		List<String> authHeader =  requestContext.getHeaders().get("allow");
 //		
 //		if(authHeader !=null && authHeader.size() > 0) {
@@ -46,8 +43,13 @@ public class GlobalAuth implements ContainerRequestFilter,ContainerResponseFilte
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
 			throws IOException {
+		
+		System.out.println("calling "+requestContext.getUriInfo().getBaseUri());
+		System.out.println("Headers " + requestContext.getHeaders());
+		
+		
 		responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
-        responseContext.getHeaders().add("Access-Control-Allow-Headers","origin, content-type, accept, authorization");
+        responseContext.getHeaders().add("Access-Control-Allow-Headers","origin,X-Custom-Header,content-type, accept, authorization");
         responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 		

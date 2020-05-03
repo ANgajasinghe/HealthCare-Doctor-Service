@@ -30,6 +30,14 @@ public class DocterService {
 	}
 	
 	@GET
+	@Path("spec")
+	@Produces(MediaType.APPLICATION_JSON)
+	public DoctorDTO getAllSpecifications() {
+		return dm.getAllSpecifications();
+	}
+	
+	
+	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public DoctorDTO SelectDocById(@PathParam("id") String id) {
@@ -40,7 +48,10 @@ public class DocterService {
 	@POST
 	@Path("add")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public DoctorDTO insertIntoDoctors(DoctorDTO doctorDTOs) {
+		System.out.println("callinfkjkhgcfghjm,.uuuu");
+		System.out.println(doctorDTOs);
 		return dm.insertIntoDoctors(doctorDTOs);
 	}
 	
@@ -56,7 +67,9 @@ public class DocterService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String UpdateDoc(@PathParam("id") String docID , DoctorDTO dto) {
-		return dm.UpdateDoc(docID, dto);
+		System.out.println("calling+ "+ dto);
+		//return dm.UpdateDoc(docID, dto);
+		return "sddddd";
 	}
 	
 	

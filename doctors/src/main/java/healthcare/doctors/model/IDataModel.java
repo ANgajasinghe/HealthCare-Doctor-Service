@@ -11,6 +11,9 @@ public interface IDataModel {
 	public boolean connectionChecker(Connection MYSQLcon);
 	
 	public DoctorDTO getAllDoctors(String ALL);
+	public DoctorDTO getAllSpecifications();
+	
+	
 	public DoctorDTO SelectDocId(String regNO);
 	public DoctorDTO SelectDocById(String id);
 	
