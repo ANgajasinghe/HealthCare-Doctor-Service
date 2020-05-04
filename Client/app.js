@@ -4,45 +4,88 @@ $(document).ready(function() {
 
 //CLIENT-MODEL===================================================================================
 
-function  validateInit(response) {
+function  validateResponse(response) {
     var resultSet = response;
     if (resultSet.response_status === 0) {
         InitAterts(response.error.ERROR_NAME,"alert-warning");
         return "false";
-    }
+    };
     return true;     
-}
+};
 
-//validte
 function validateForm(){
     //get all form elements
     var formArray = DOMobj().saveForm.serializeArray();
     var errorList = "";
     for (var i = 0; i < formArray.length; i++){
-        if((formArray[i]['value'] === "" || formArray[i]['value'] === "-1")
+        //form Empty checker ------
+        if((formArray[i]['value'].trim() === "" || formArray[i]['value'].trim() === "-1")
         && formArray[i]['name'] !== "doc_tp3"
         && formArray[i]['name'] !== "doc_id"
         ){
             errorList = errorList + "<p>" + formArray[i]['name'] + " is Can not empty please fill it </p>";
-        }
-    }
-    DOMobj().alerts.warning.show().html(errorList);
+        };
+
+        if(formArray[i]['name'] === "doc_tp3" || 
+        formArray[i]['name'] === "doc_tp2" || 
+        formArray[i]['name'] === "doc_tp1"){
+
+            if(!$.isNumeric(formArray[i]['value'].trim()) ){
+                if(formArray[i]['name'] === "doc_tp3"){
+                    if(formArray[i]['value'] !== ""){
+                        //if(formArray[i]['value'].trim().length < 10){
+                            console.log("Calling");
+                            errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit or More</b></p>";
+                       // }
+                    }
+                } else{
+                   // if(formArray[i]['value'].trim().length < 10){
+                        errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit or More</b></p>";
+                   // }
+                }
+
+              
+            }
+        };
+
+        
+    };
+    var closeBtn = '<p class="text-sm-right"><i class="fas fa-window-close"></i></p>';
+    DOMobj().alerts.warning.show().html(closeBtn + errorList);
     if(errorList !== ""){
         return false;
-    }
+    };
     return true
-}
+};
+
+function FormToJSON(formArray) {
+
+    var oJSON = {};
+    for (var i = 0; i < formArray.length; i++){
+        oJSON[formArray[i]['name']] = formArray[i]['value'].trim();
+    }
+
+    $.each(oJSON, function(key, value){
+        if (value === "" || value === null){
+            delete oJSON[key];
+        }
+    });
+
+    return oJSON;
+};
+
 
 
 //CONTROLLER=====================================================================================
-function Init() {  
+function Init() { 
+    //get all doctors from table  
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/doctors/webapi/doc",
         contentType: "application/json",
         dataType: "json",
         success: function(response){
-            if(validateInit(response)){
+            if(validateResponse(response)){
                
                 InitGrid(response.doc_list);
             }
@@ -50,12 +93,13 @@ function Init() {
         error: function (jqXhr, textStatus, errorMessage) {}
     });
 
+    //get all Specification
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/doctors/webapi/doc/spec",
         dataType: "json",
         success: function (response) {
-            if(validateInit(response)){
+            if(validateResponse(response)){
                 InitDropDown(response.doc_list);
             }
         },
@@ -67,7 +111,7 @@ function Init() {
     //Set Alerts
     InitAterts();
 
-}
+};
 
 //set moddel according to Update and add button 
 $(document).on('click' , '#btnUpdate',function(event) {
@@ -92,75 +136,55 @@ $(document).on('click' , '#btnUpdate',function(event) {
 
 });
 
-$(document).on('click' , '#btnUpdate',function(event) {
-    //access Data attr from button 
-    var doc_id = $(this).data().doc_id;
-    SetModelUI(doc_id);
-    
-    var form = DOMobj().form;
-
-    form.doc_id.val(doc_id);
-    form.doc_reg_no.val($(this).closest("tr").find('td:eq(0)').text());
-    form.specification_id.val($(this).closest("tr").find('td:eq(1)').text());
-    form.doc_first_name.val($(this).closest("tr").find('td:eq(3)').text());
-    form.doc_last_name.val($(this).closest("tr").find('td:eq(4)').text());
-    form.doc_email.val($(this).closest("tr").find('td:eq(5)').text());
-    form.doc_tp1.val($(this).closest("tr").find('td:eq(6)').text());
-    form.doc_tp2.val($(this).closest("tr").find('td:eq(7)').text());
-    form.doc_tp3.val($(this).closest("tr").find('td:eq(8)').text());
-    form.doc_address.val($(this).closest("tr").find('td:eq(9)').text());
-    form.doc_city.val($(this).closest("tr").find('td:eq(10)').text());
-
-
-});
-
 $(document).on('click' , '#btnDelete',function(event) {
     var doc_id = $(this).data().doc_id;
-    var form = DOMobj().formDel;
-    form.doc_id.val(doc_id);
+    DOMobj().formDel.doc_id.val(doc_id);
 });
-
 
 $("#btnAdd").on('click', function () {
     InitAterts();
     SetModelUI(null);
 });
 
-//------------Model button action-----------
+
+
+
+
+$(DOMobj().buttons.delete).on('click', function () {
+    var id = DOMobj().formDel.doc_id.val();
+    $.ajax({
+        type: "DELETE",
+        url: "http://localhost:8080/doctors/webapi/doc/delete/"+id,
+        data: "data",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (response) {
+            if(validateResponse(response) === true){
+                InitGrid(response.doc_list);
+                InitAterts("Delete Operation Successfully Implemented"  ,"alert-success")
+            }
+        }
+    });
+   
+});
+
+
+
 $(DOMobj().buttons.save).on('click', function () {
     //-------Identify Save button---------------
-    if(DOMobj().form.doc_id.val() === ""){ //implement save action 
+    if(DOMobj().form.doc_id.val() === ""){  
         if(validateForm() === true){
             SaveDoctorInformation();
         }else{
             return;
         }    
     }
-    else{ //Implement Update action 
+    else{ 
         console.log(form.doc_id.val());
-        //SaveDoctorInformation();
+        
     }
 
 });
-
-//------------Remove Button action----------
-$(DOMobj().buttons.delete).on('click', function () {
-    console.log(DOMobj().formDel.doc_id.val())
-});
-
-
-
-
-//----------Remove Alerts--------------
-$('table').on('click', function () {
-        InitAterts();
-});
-$('.alert').on('click', function () {
-        InitAterts();
-});
-
-
-
 
 function SaveDoctorInformation() {
    var obj  = DOMobj().saveForm.serializeArray();
@@ -173,7 +197,7 @@ function SaveDoctorInformation() {
         dataType: "json",
         data: JSON.stringify(formVal),
         success: function (response) {
-            if(validateInit(response) === true){
+            if(validateResponse(response) === true){
                 InitGrid(response.doc_list);
                 InitAterts("New Doctor Added Successfully" ,"alert-success")
             }
@@ -183,26 +207,20 @@ function SaveDoctorInformation() {
             console.log(textStatus);
         }
     });
-}
+};
 
-function FormToJSON(formArray) {//serialize data function
 
-    var oJSON = {};
-    for (var i = 0; i < formArray.length; i++){
-        oJSON[formArray[i]['name']] = formArray[i]['value'];
-    }
-
-    $.each(oJSON, function(key, value){
-        if (value === "" || value === null){
-            delete oJSON[key];
-        }
-    });
-
-    return oJSON;
-}
 
 //UI CONTROLLER==================================================================================
-
+/*
+UI Controller start in here
+    DOMobj() :- Have all DOM id(s) and return those;
+    InitGrid(jsonList):-Service returns Just JSON obj this function will bind that to grid 
+    SetModelUI(doc_id):- The same model form uses in add and update events: this function will change model form according to action
+    InitAterts(value , CssClass):- Alert Init and change same alert classes in this function, according to action.
+    //----------Remove Alerts-------------- :
+        In this section functions will remove responces Alerts when click the table , add button or same alert.
+    */
 
 function DOMobj(){
     var DOMobj = {
@@ -302,6 +320,8 @@ function SetModelUI(doc_id){
 };
 
 function InitAterts(value , CssClass){
+
+    var closeBtn = '<p><i class="fas fa-window-close text-right"></i></p>';
     if(value == null){
         DOMobj().alerts.warning.empty().hide();
     } 
@@ -310,18 +330,25 @@ function InitAterts(value , CssClass){
                                       .addClass(CssClass)
                                       .show();
 
-        DOMobj().alerts.warning.html( 'Can not save ' + value);                              
+        DOMobj().alerts.warning.html( 'Can not save ' + closeBtn + value);                              
     }
     else if(CssClass === "alert-success"){
         DOMobj().alerts.warning.removeClass('alert-danger')
         .addClass(CssClass)
         .show();
 
-        DOMobj().alerts.warning.html( value ); 
+        DOMobj().alerts.warning.html( closeBtn + value ); 
     }
     
-}
+};
 
+//----------Remove Alerts--------------
+$('table').on('click', function () {
+    InitAterts();
+});
+$('.alert').on('click', function () {
+    InitAterts();
+});
 
 
 
