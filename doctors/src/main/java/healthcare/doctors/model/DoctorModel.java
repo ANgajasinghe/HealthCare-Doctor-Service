@@ -338,9 +338,56 @@ public class DoctorModel implements IDataModel {
 	}
 
 	@Override
-	public String DeleteDocAll(int docID) {
-		// TODO Auto-generated method stub
-		return null;
+	public DoctorDTO DeleteDoc(int docID) {
+		DoctorDTO docObj = new DoctorDTO();
+		Connection MYSQLcon = null;
+		try {
+			MYSQLcon = cBuilder.MYSQLConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+			ErrorDTO eDto = new ErrorDTO();
+			eDto.setERROR_NAME(e.getMessage());
+
+			docObj.setResponse_status(0);
+			docObj.setError(eDto);
+			return docObj;
+		}
+
+		//DoctorDTO currectDoctorDTO = this.SelectDocById(String.valueOf(docID));
+
+		if (true) {
+
+			String qurtString = "DELETE FROM doctors WHERE doc_id = ? \n";
+			PreparedStatement pStatement;
+
+			try {
+				pStatement = MYSQLcon.prepareStatement(qurtString);
+				pStatement.setInt(1, docID);
+				pStatement.execute();
+				return this.getAllDoctors(null);
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+				ErrorDTO eDto = new ErrorDTO();
+				eDto.setERROR_CODE(e.getErrorCode());
+				eDto.setERROR_NAME(e.getMessage());
+
+				docObj.setResponse_status(0);
+				docObj.setError(eDto);
+				return docObj;
+			}
+
+		} else {
+			ErrorDTO eDto = new ErrorDTO();
+
+			eDto.setERROR_CODE(100000);
+			eDto.setERROR_NAME("Invalide Doc ID");
+
+			docObj.setResponse_status(0);
+			docObj.setError(eDto);
+			return docObj;
+		}
+
 	}
 
 	@Override

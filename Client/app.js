@@ -145,10 +145,7 @@ $(DOMobj().buttons.save).on('click', function () {
 
 //------------Remove Button action----------
 $(DOMobj().buttons.delete).on('click', function () {
-  
     console.log(DOMobj().formDel.doc_id.val())
-    
-    
 });
 
 

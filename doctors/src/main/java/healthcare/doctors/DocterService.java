@@ -58,8 +58,9 @@ public class DocterService {
 	@DELETE
 	@Path("delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String DeleteDocAll(@PathParam("id") String docID ) {
-		return dm.DeleteDocAll(Integer.valueOf(docID));
+	@Consumes(MediaType.APPLICATION_JSON)
+	public DoctorDTO DeleteDocAll(@PathParam("id") String docID ) {
+		return dm.DeleteDoc(Integer.valueOf(docID));
 	}
 	
 	@PUT
