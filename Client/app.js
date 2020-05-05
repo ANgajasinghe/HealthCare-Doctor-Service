@@ -190,6 +190,7 @@ $(DOMobj().buttons.save).on('click', function () {
         }    
     }
     else{ 
+        DOMobj().saveModel.modal('toggle');
         SaveDoctorInformation("PUT");
     }
 
@@ -357,7 +358,7 @@ function InitAterts(value , CssClass){
     
     var closeBtn = '<div class="text-sm-right"><i class="fas fa-window-close"></i></div>';
     if(value == null){
-        DOMobj().alerts.warning.empty().hide();
+        DOMobj().alerts.warning.empty().hide().addClass('alert-danger');
     } 
     else if(CssClass === "alert-warning"){
         DOMobj().alerts.warning.removeClass('alert-danger')
