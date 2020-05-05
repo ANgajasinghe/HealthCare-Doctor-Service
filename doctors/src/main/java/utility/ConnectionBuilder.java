@@ -12,6 +12,9 @@ import org.w3c.dom.NodeList;
 
 public class ConnectionBuilder {
 
+	private final String JDBC = "jdbc:mysql://";
+	private final String SERVERTIME = "?serverTimezone=UTC";
+	
 	private final String Path = "C:\\PAF";
 	private final String fileName = "Connection.xml";
 	private Connection MYSQLcon;
@@ -33,7 +36,11 @@ public class ConnectionBuilder {
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) node;
 						ConnectionDTO connectionDTO = new ConnectionDTO();
-						connectionDTO.setUrlString(eElement.getElementsByTagName("url").item(0).getTextContent());
+						
+						String server = eElement.getElementsByTagName("server").item(0).getTextContent();
+						String database = eElement.getElementsByTagName("database").item(0).getTextContent();
+						connectionDTO.setUrlString(JDBC+server+"/"+database+SERVERTIME);
+						
 						connectionDTO.setUserNameString(eElement.getElementsByTagName("username").item(0).getTextContent());
 						connectionDTO.setPasswordString(eElement.getElementsByTagName("password").item(0).getTextContent());
 						return connectionDTO;

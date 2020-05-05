@@ -3,6 +3,7 @@ package utility;
 public class ConnectionDTO {
 	
 	private String urlString;
+	private String databaseString;
 	private String userNameString;
 	private String passwordString;
 	
@@ -25,6 +26,12 @@ public class ConnectionDTO {
 	}
 	public void setPasswordString(String passwordString) {
 		this.passwordString = passwordString;
+	}
+	public String getDatabaseString() {
+		return databaseString;
+	}
+	public void setDatabaseString(String databaseString) {
+		this.databaseString = databaseString;
 	}
 	
 	
