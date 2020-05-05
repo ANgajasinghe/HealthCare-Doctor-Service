@@ -42,15 +42,11 @@ function validateForm(){
 
             if(!$.isNumeric(formArray[i]['value'].trim()) ||  formArray[i]['value'].trim().length == 9){
                 if(formArray[i]['name'] === "doc_tp3"){
-                    if(formArray[i]['value'] !== ""){
-                      
+                    if(formArray[i]['value'] !== ""){ 
                         errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit</b></p>";
-                      
                     }
                 } else{
-                  
                         errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit</b></p>";
-                   
                 }
             } 
         };
@@ -195,8 +191,13 @@ $(DOMobj().buttons.save).on('click', function () {
         }    
     }
     else{ 
-        DOMobj().saveModel.modal('toggle');
-        SaveDoctorInformation("PUT");
+        if(validateForm() === true){
+            DOMobj().saveModel.modal('toggle');
+            SaveDoctorInformation("PUT");
+        }else{
+            return;
+        }
+        
     }
 
 });
