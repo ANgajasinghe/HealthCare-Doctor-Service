@@ -10,6 +10,7 @@ public class Messages {
 	public static String insertSessonErr="Entered Data is wrong  :  ";
 	public static String systemFail = "Internal System Falier";
 	
+	public static String invalidDocID = "Sorry, We cannot find this doctor id from the table";
 	
 	public static String DeleteSuccess = "Delete action successfully implemented";
 	public static String updateSuccess = "Update action sucessfully implemented";

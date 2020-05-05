@@ -14,7 +14,7 @@
 <body>
     <div class="container mt-5">
         <div class="alert alert-danger" role="alert" id="alert_warning" title="Click to remove">
-            
+
         </div>
 
         <div class="row">
@@ -99,6 +99,20 @@
                                 placeholder="Kumara" required>
                         </div>
 
+                        <label for="radio-panel"><b>Doctor Status</b></label>
+                        <div class="form-check" id="radio-panel">
+                            <input class="form-check-input" type="radio" name="doc_status_id" id="radiobtn1" value="1">
+                            <label class="form-check-label" for="radiobtn1">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="doc_status_id" id="radiobtn2" value="0">
+                            <label class="form-check-label" for="radiobtn2">
+                                Deactive
+                            </label>
+                        </div>
+                        <br>
                         <div class="form-group">
                             <label for="doc_email"><b>Email</b></label>
                             <input type="email" class="form-control" id="doc_email" name="doc_email"
@@ -136,8 +150,9 @@
                         </div>
                     </div>
                     <div class="modal-footer ">
-                        <input type="button" class="btn btn-success btn-lg" data-dismiss="modal" id="modelBtn" style="width: 100%;" value="save">
-                        
+                        <input type="button" class="btn btn-success btn-lg" data-dismiss="modal" id="modelBtn"
+                            style="width: 100%;" value="save">
+
                     </div>
                 </form>
             </div>
@@ -152,7 +167,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form>
-                    <input type="text" id="doc_idD" hidden/>
+                    <input type="text" id="doc_idD" hidden />
                 </form>
                 <div class="modal-header">
                     <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>

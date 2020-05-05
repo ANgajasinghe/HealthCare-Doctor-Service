@@ -1,6 +1,5 @@
 package healthcare.doctors;
 
-import java.util.List;
 
 
 import javax.ws.rs.Consumes;
@@ -41,7 +40,6 @@ public class DocterService {
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public DoctorDTO SelectDocById(@PathParam("id") String id) {
-		System.out.println("calling+"+id);
 		return dm.SelectDocById(id);
 	}
 	
@@ -50,8 +48,6 @@ public class DocterService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public DoctorDTO insertIntoDoctors(DoctorDTO doctorDTOs) {
-		System.out.println("callinfkjkhgcfghjm,.uuuu");
-		System.out.println(doctorDTOs);
 		return dm.insertIntoDoctors(doctorDTOs);
 	}
 	
@@ -64,13 +60,12 @@ public class DocterService {
 	}
 	
 	@PUT
-	@Path("update/{id}")
+	@Path("update")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String UpdateDoc(@PathParam("id") String docID , DoctorDTO dto) {
+	public DoctorDTO UpdateDoc(DoctorDTO dto) {
 		System.out.println("calling+ "+ dto);
-		//return dm.UpdateDoc(docID, dto);
-		return "sddddd";
+		return dm.UpdateDoc(dto);
 	}
 	
 	

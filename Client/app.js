@@ -124,15 +124,22 @@ $(document).on('click' , '#btnUpdate',function(event) {
     form.doc_id.val(doc_id);
     form.doc_reg_no.val($(this).closest("tr").find('td:eq(0)').text());
     form.specification_id.val($(this).closest("tr").find('td:eq(1)').text());
-    form.doc_first_name.val($(this).closest("tr").find('td:eq(3)').text());
-    form.doc_last_name.val($(this).closest("tr").find('td:eq(4)').text());
-    form.doc_email.val($(this).closest("tr").find('td:eq(5)').text());
-    form.doc_tp1.val($(this).closest("tr").find('td:eq(6)').text());
-    form.doc_tp2.val($(this).closest("tr").find('td:eq(7)').text());
-    form.doc_tp3.val($(this).closest("tr").find('td:eq(8)').text());
-    form.doc_address.val($(this).closest("tr").find('td:eq(9)').text());
-    form.doc_city.val($(this).closest("tr").find('td:eq(10)').text());
 
+    if($(this).closest("tr").find('td:eq(2)').text() === "0"){
+        form.deactive.prop("checked",true);
+    } else{
+        form.active.prop("checked",true);
+    }
+    form.doc_first_name.val($(this).closest("tr").find('td:eq(4)').text());
+    form.doc_last_name.val($(this).closest("tr").find('td:eq(5)').text());
+    form.doc_email.val($(this).closest("tr").find('td:eq(6)').text());
+    form.doc_tp1.val($(this).closest("tr").find('td:eq(7)').text());
+    form.doc_tp2.val($(this).closest("tr").find('td:eq(8)').text());
+    form.doc_tp3.val($(this).closest("tr").find('td:eq(9)').text());
+    form.doc_address.val($(this).closest("tr").find('td:eq(10)').text());
+    form.doc_city.val($(this).closest("tr").find('td:eq(11)').text());
+
+    
 
 });
 
@@ -145,9 +152,6 @@ $("#btnAdd").on('click', function () {
     InitAterts();
     SetModelUI(null);
 });
-
-
-
 
 
 $(DOMobj().buttons.delete).on('click', function () {
@@ -169,37 +173,50 @@ $(DOMobj().buttons.delete).on('click', function () {
 });
 
 
-
 $(DOMobj().buttons.save).on('click', function () {
-    //-------Identify Save button---------------
+    
     if(DOMobj().form.doc_id.val() === ""){  
         if(validateForm() === true){
-            SaveDoctorInformation();
+            SaveDoctorInformation("POST");
         }else{
             return;
         }    
     }
     else{ 
-        console.log(form.doc_id.val());
-        
+        SaveDoctorInformation("PUT");
     }
 
 });
 
-function SaveDoctorInformation() {
+function SaveDoctorInformation(type) {
    var obj  = DOMobj().saveForm.serializeArray();
    var formVal = FormToJSON(obj);
 
+   console.log(formVal);
+
+    var url ="";
+    var message = "";
+
+    if (type === "POST") {
+        url = "http://localhost:8080/doctors/webapi/doc/add";
+        message = "New Doctor Added Successfully";
+    } 
+    else if(type === "PUT"){
+        url = "http://localhost:8080/doctors/webapi/doc/update";
+        message = formVal.doc_reg_no + ":- Doctor updated sucessfully";
+    } 
+
+
     $.ajax({
-        type:"POST",
-        url: "http://localhost:8080/doctors/webapi/doc/add",
+        type: type,
+        url: url,
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(formVal),
         success: function (response) {
             if(validateResponse(response) === true){
                 InitGrid(response.doc_list);
-                InitAterts("New Doctor Added Successfully" ,"alert-success")
+                InitAterts(message ,"alert-success")
             }
             
         },
@@ -208,6 +225,8 @@ function SaveDoctorInformation() {
         }
     });
 };
+
+
 
 
 
@@ -243,7 +262,9 @@ function DOMobj(){
             doc_tp1: $("#doc_tp1"),
             doc_tp2: $("#doc_tp2"),
             doc_tp3: $("#doc_tp3"),
-            specification_id:$("#specification_id")
+            specification_id:$("#specification_id"),
+            active:$("#radiobtn1"),
+            deactive:$("#radiobtn2")
         },
         formDel:{
             doc_id :$("#doc_idD"),
@@ -262,13 +283,17 @@ function DOMobj(){
 };
 
  function InitGrid(jsonList) {
+    
     DOMobj().grid_body.empty();
     var tr = '';
     $.each(jsonList,function (key,value) { 
         tr = $('<tr/>');
-        tr.append('<td>'+value.doc_reg_no+'</td>');
+        value.doc_status_id === 0 ? 
+        tr.append('<td class="text-danger">'+value.doc_reg_no+'</td>') : tr.append('<td class="text-success">'+value.doc_reg_no+'</td>')
+        //tr.append('<td>'+value.doc_reg_no+'</td>');
         tr.append('<td hidden>'+value.specification_id+'</td>');
-        tr.append('<td>Surgeon</td>');
+        tr.append('<td hidden>'+value.doc_status_id+'</td>');
+        tr.append('<td>'+value.specification_name+'</td>');
         tr.append('<td>'+value.doc_first_name+'</td>');
         tr.append('<td>'+value.doc_last_name+'</td>');
         tr.append('<td>'+value.doc_email+'</td>');
@@ -321,7 +346,7 @@ function SetModelUI(doc_id){
 
 function InitAterts(value , CssClass){
 
-    var closeBtn = '<p><i class="fas fa-window-close text-right"></i></p>';
+    var closeBtn = '<div class="text-sm-right"><i class="fas fa-window-close"></i></div>';
     if(value == null){
         DOMobj().alerts.warning.empty().hide();
     } 
