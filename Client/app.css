@@ -1,3 +1,13 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-color: #ffffff;
+}
+.main-text{
+  size: 50em !important;
+}
 #btnAdd{
   width:50%;
   text-align: left;
