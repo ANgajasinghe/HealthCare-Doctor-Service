@@ -16,6 +16,7 @@ function  validateResponse(response) {
     return true;     
 };
 
+//Handle form validation part
 function validateForm(){
     //get all form elements
     var formArray = DOMobj().saveForm.serializeArray();
@@ -46,14 +47,9 @@ function validateForm(){
                         errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit</b></p>";
                    
                 }
-
-              
-            }
-            
+            } 
         };
-        
 
-        
     };
     var closeBtn = '<p class="text-sm-right"><i class="fas fa-window-close"></i></p>';
     DOMobj().alerts.warning.show().html(closeBtn + errorList);
@@ -65,6 +61,7 @@ function validateForm(){
 
 };
 
+//Convert form attributes as Js object
 function FormToJSON(formArray) {
 
     var oJSON = {};
@@ -84,6 +81,8 @@ function FormToJSON(formArray) {
 
 
 //CONTROLLER=====================================================================================
+
+//GET all doc and spec data from server
 function Init() { 
     //get all doctors from table  
     $.ajax({
@@ -159,7 +158,7 @@ $("#btnAdd").on('click', function () {
     SetModelUI(null);
 });
 
-
+//Delete
 $(DOMobj().buttons.delete).on('click', function () {
     var id = DOMobj().formDel.doc_id.val();
     $.ajax({
@@ -179,6 +178,7 @@ $(DOMobj().buttons.delete).on('click', function () {
 });
 
 
+//Identify POST or Put and chooses the implementation. 
 $(DOMobj().buttons.save).on('click', function () {
     
     if(DOMobj().form.doc_id.val() === ""){  
@@ -196,6 +196,7 @@ $(DOMobj().buttons.save).on('click', function () {
 
 });
 
+//POST and PUT AJAX calls 
 function SaveDoctorInformation(type) {
    var obj  = DOMobj().saveForm.serializeArray();
    var formVal = FormToJSON(obj);
