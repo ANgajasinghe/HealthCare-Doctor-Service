@@ -1,3 +1,8 @@
+function _URL()
+{ 
+    return "http://localhost:8080/";
+};
+
 InitAterts();
 $(document).ready(function() {
     //Set Alerts
@@ -87,7 +92,7 @@ function Init() {
     //get all doctors from table  
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/doctors/webapi/doc",
+        url: _URL()+"doctors/webapi/doc",
         contentType: "application/json",
         dataType: "json",
         success: function(response){
@@ -102,7 +107,7 @@ function Init() {
     //get all Specification
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/doctors/webapi/doc/spec",
+        url: _URL()+"doctors/webapi/doc/spec",
         dataType: "json",
         success: function (response) {
             if(validateResponse(response)){
@@ -163,7 +168,7 @@ $(DOMobj().buttons.delete).on('click', function () {
     var id = DOMobj().formDel.doc_id.val();
     $.ajax({
         type: "DELETE",
-        url: "http://localhost:8080/doctors/webapi/doc/delete/"+id,
+        url: _URL()+"doctors/webapi/doc/delete/"+id,
         data: "data",
         dataType: "json",
         contentType: "application/json",
@@ -207,11 +212,11 @@ function SaveDoctorInformation(type) {
     var message = "";
 
     if (type === "POST") {
-        url = "http://localhost:8080/doctors/webapi/doc/add";
+        url = _URL()+"doctors/webapi/doc/add";
         message = "New Doctor Added Successfully";
     } 
     else if(type === "PUT"){
-        url = "http://localhost:8080/doctors/webapi/doc/update";
+        url = _URL()+"doctors/webapi/doc/update";
         message = formVal.doc_reg_no + ":- Doctor updated sucessfully";
     } 
 

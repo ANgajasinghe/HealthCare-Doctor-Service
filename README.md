@@ -33,4 +33,12 @@ HelthCare is a hospital management system where the registered users can make ap
 
 <p></p>
 <h4> -- Project configuration -- </h4>
+<ol type="1">
+	<li> Create a database. </li>
+	<li> Export latest .sql backup to created database.(important)</li>
+	<li> <b>Extract IT18153682.zip into the C: drive(important).</b> </li>
+	<li> <b>Open and edit Connection.xml file according to your database (important).</b> </li>
+	<li> Run doctors service using apache server  </li>
+	<li> If you are not running on http://localhost/ Please change APIs URL from _URL() (<i>top of the app.js file</i>) function.</li>
+</ol>  
 

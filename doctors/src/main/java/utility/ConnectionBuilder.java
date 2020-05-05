@@ -15,7 +15,7 @@ public class ConnectionBuilder {
 	private final String JDBC = "jdbc:mysql://";
 	private final String SERVERTIME = "?serverTimezone=UTC";
 	
-	private final String Path = "C:\\PAF";
+	private final String Path = "C:\\IT18153682";
 	private final String fileName = "Connection.xml";
 	private Connection MYSQLcon;
 
