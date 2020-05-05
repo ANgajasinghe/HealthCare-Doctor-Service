@@ -12,18 +12,22 @@
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container-fluid  mt-5">
         <div class="alert alert-danger" role="alert" id="alert_warning" title="Click to remove">
 
         </div>
 
         <div class="row">
-            <div class="col-12 text-center">
+            <!-- <div class="col-12 text-center">
                 <button type="button" id="btnAdd" class="btn btn-success" data-title="Add" data-toggle="modal"
                     data-target="#add" title="Add a doctor">
                     <i class="fas fa-plus-square"></i> <span> Add a new doctor </span>
                 </button>
-            </div>
+            </div> -->
+            <button type="button" id="btnAdd" class="btn btn-success" data-title="Add" data-toggle="modal"
+                    data-target="#add" title="Add a doctor">
+                    <i class="fas fa-plus-square"></i> <span> Add a new doctor </span>
+             </button>
 
 
         </div>
@@ -32,11 +36,11 @@
 
 
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-5 ">
         <div class="row">
             <div class="table-responsive">
-                <table id="doc_grid" class="table">
-                    <thead>
+                <table id="doc_grid" class="table ml-1">
+                    <thead class="table-success">
                         <th scope="col">Doc reg no</th>
                         <th scope="col">Spec</th>
                         <th scope="col">First name</th>
@@ -47,6 +51,8 @@
                         <th scope="col">Tp - 03</th>
                         <th scope="col">Address</th>
                         <th scope="col">City</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delect</th>
                     </thead>
                     <tbody id="doc_grid_body">
 
@@ -151,7 +157,7 @@
                     </div>
                     <div class="modal-footer ">
                         <input type="button" class="btn btn-success btn-lg" data-dismiss="modal" id="modelBtn"
-                            style="width: 100%;" value="save">
+                            style="width: 100%;" value="">
 
                     </div>
                 </form>

@@ -333,13 +333,13 @@ function SetModelUI(doc_id){
     if(doc_id !== null){
         $(DOMobj().modelHedding).html("Edit Your Detail"); 
         $(DOMobj().modelBtn).removeClass("btn-success")
-                                   .html("Update")
+                                   .prop("value","Update")
                                    .addClass("btn-warning");
     }
     else{
         $(DOMobj().modelHedding).html("Add a doctor"); 
         $(DOMobj().modelBtn).removeClass("btn-warning")
-                                   .html("Save")
+                                   .prop("value","Save")
                                    .addClass("btn-success");
     }
     return;
