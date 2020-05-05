@@ -6,6 +6,7 @@ $(document).ready(function() {
 
 //CLIENT-MODEL===================================================================================
 
+//validate responses
 function  validateResponse(response) {
     var resultSet = response;
     if (resultSet.response_status === 0) {
@@ -28,27 +29,29 @@ function validateForm(){
             errorList = errorList + "<p>" + formArray[i]['name'] + " is Can not empty please fill it </p>";
         };
 
+        //Phone Number checker
         if(formArray[i]['name'] === "doc_tp3" || 
         formArray[i]['name'] === "doc_tp2" || 
         formArray[i]['name'] === "doc_tp1"){
 
-            if(!$.isNumeric(formArray[i]['value'].trim()) ){
+            if(!$.isNumeric(formArray[i]['value'].trim()) ||  formArray[i]['value'].trim().length == 9){
                 if(formArray[i]['name'] === "doc_tp3"){
                     if(formArray[i]['value'] !== ""){
-                        //if(formArray[i]['value'].trim().length < 10){
-                            console.log("Calling");
-                            errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit or More</b></p>";
-                       // }
+                      
+                        errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit</b></p>";
+                      
                     }
                 } else{
-                   // if(formArray[i]['value'].trim().length < 10){
-                        errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit or More</b></p>";
-                   // }
+                  
+                        errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digit</b></p>";
+                   
                 }
 
               
             }
+            
         };
+        
 
         
     };
@@ -58,6 +61,8 @@ function validateForm(){
         return false;
     };
     return true
+    
+
 };
 
 function FormToJSON(formArray) {
@@ -178,6 +183,7 @@ $(DOMobj().buttons.save).on('click', function () {
     
     if(DOMobj().form.doc_id.val() === ""){  
         if(validateForm() === true){
+            DOMobj().saveModel.modal('toggle');
             SaveDoctorInformation("POST");
         }else{
             return;
@@ -274,10 +280,11 @@ function DOMobj(){
             warning : $("#alert_warning")
         },
         buttons:{
-            delete: $('#modelBtnRemove'),
-            save: $('#modelBtn')
+            delete: $("#modelBtnRemove"),
+            save: $("#modelBtn")
             
-        }
+        },
+        saveModel : $("#add")
     };
 
     return DOMobj;
@@ -337,6 +344,7 @@ function SetModelUI(doc_id){
                                    .addClass("btn-warning");
     }
     else{
+        DOMobj().form.active.prop("checked",true);
         $(DOMobj().modelHedding).html("Add a doctor"); 
         $(DOMobj().modelBtn).removeClass("btn-warning")
                                    .prop("value","Save")
@@ -346,7 +354,7 @@ function SetModelUI(doc_id){
 };
 
 function InitAterts(value , CssClass){
-
+    
     var closeBtn = '<div class="text-sm-right"><i class="fas fa-window-close"></i></div>';
     if(value == null){
         DOMobj().alerts.warning.empty().hide();
