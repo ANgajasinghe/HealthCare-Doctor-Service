@@ -1,4 +1,6 @@
+InitAterts();
 $(document).ready(function() {
+    //Set Alerts
     Init();
 });
 
@@ -108,8 +110,7 @@ function Init() {
         }
     });
 
-    //Set Alerts
-    InitAterts();
+    
 
 };
 

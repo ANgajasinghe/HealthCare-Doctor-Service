@@ -29,26 +29,8 @@ public class DoctorDTO {
 	private String specification_name;
 	private String specification_dis;
 	
-	//doc_session
-	
-	private Integer session_id;
-	private String available_date;
-	private String start_time;
-	private String end_time;
-	private Integer isEveryday;
-	private Integer isActive;
-	private Integer patient_limit;
-	private Double price;
 	
 	
-	/*other attributes is here*/
-	private Integer ward_id;
-	
-	private Integer hospital_id;
-	private List<String> hospilalIDList;
-	private List<String> hospitalNameList;
-	private String hospital_name;
-	private String hospital_list;
 
 	public Integer getDoc_id() {
 		return doc_id;
@@ -202,124 +184,7 @@ public class DoctorDTO {
 		this.specification_dis = specification_dis;
 	}
 	
-	
-	public Integer getSession_id() {
-		return session_id;
-	}
 
-	public void setSession_id(Integer session_id) {
-		this.session_id = session_id;
-	}
-
-	public String getAvailable_date() {
-		return available_date;
-	}
-
-	public void setAvailable_date(String available_date) {
-		this.available_date = available_date;
-	}
-
-	public String getStart_time() {
-		return start_time;
-	}
-
-	public void setStart_time(String start_time) {
-		this.start_time = start_time;
-	}
-
-	public String getEnd_time() {
-		return end_time;
-	}
-
-	public void setEnd_time(String end_time) {
-		this.end_time = end_time;
-	}
-
-	public Integer getIsEveryday() {
-		return isEveryday;
-	}
-
-	public void setIsEveryday(Integer isEveryday) {
-		this.isEveryday = isEveryday;
-	}
-
-	public Integer getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Integer isActive) {
-		this.isActive = isActive;
-	}
-
-	public Integer getPatient_limit() {
-		return patient_limit;
-	}
-	
-	
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public void setPatient_limit(Integer patient_limit) {
-		this.patient_limit = patient_limit;
-	}
-
-	public Integer getHospital_id() {
-		return hospital_id;
-	}
-
-	public void setHospital_id(Integer hospital_id) {
-		this.hospital_id = hospital_id;
-	}
-	
-
-	public List<String> getHospilalIDList() {
-		return hospilalIDList;
-	}
-
-	public void setHospilalIDList(List<String> hospilalIDList) {
-		this.hospilalIDList = hospilalIDList;
-	}
-
-	public List<String> getHospitalNameList() {
-		return hospitalNameList;
-	}
-
-	public void setHospitalNameList(List<String> hospitalNameList) {
-		this.hospitalNameList = hospitalNameList;
-	}
-
-	public Integer getWard_id() {
-		return ward_id;
-	}
-
-	public void setWard_id(Integer ward_id) {
-		this.ward_id = ward_id;
-	}
-
-	public String getHospital_name() {
-		return hospital_name;
-	}
-
-	public void setHospital_name(String hospital_name) {
-		this.hospital_name = hospital_name;
-	}
-	
-	public String getHospital_list() {
-		return hospital_list;
-	}
-
-	public void setHospital_list(String hospital_list) {
-		this.hospital_list = hospital_list;
-	}
-
-	
-	
 	//Error DTO
 
 	private ErrorDTO Error;
@@ -343,6 +208,7 @@ public class DoctorDTO {
 		this.doc_list = doc_list;
 	}
 
+	//status
 	public Integer getResponse_status() {
 		return response_status;
 	}
