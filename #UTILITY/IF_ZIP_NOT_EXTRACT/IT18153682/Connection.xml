@@ -1,0 +1,9 @@
+<?xml version="1.0"?>  
+<class>
+    <connection>  
+        <server>127.0.0.1:3306</server><!--ADD YOUR SERVER HERE--> 
+	<database>doctorservice</database><!--ADD YOUR CREATED DATABASE HERE--> 
+        <username>root</username><!--ADD YOUR USERNAME HERE-->   
+        <password></password><!--ADD YOUR PASSWORD HERE-->    
+    </connection>  
+</class>
