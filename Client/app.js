@@ -11,6 +11,10 @@ $(document).ready(function() {
     //start application.
     Init();
 });
+$( window ).on( "load", function() {
+    $( "#busy" ).fadeOut(1000);
+    $( "#loader" ).fadeOut(1000);
+});
 
 
 
@@ -229,7 +233,7 @@ $("#btnAdd").on('click', function () {
 function  validateResponse(response) {
     var resultSet = response;
     if (resultSet.response_status === 0) {
-        InitAterts(response.error.ERROR_NAME,"alert-warning");
+        InitAterts("the database is not configured properly <b>Please visit Readme file</b><p></p>"+response.error.ERROR_NAME,"alert-warning");
         return false;
     };
     return true;     
@@ -337,7 +341,7 @@ function Init() {
             }
         },
         error: function (jqXhr, textStatus, errorMessage) {
-            confirm("Please check the server!");
+            confirm("Please check your server!");
             Init();
     
         }

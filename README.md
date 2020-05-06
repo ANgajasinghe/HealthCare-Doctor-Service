@@ -27,19 +27,40 @@ HelthCare is a hospital management system where the registered users can make ap
 	<br>
 	<small><ol>
 			<li> include all server side implementation  </li>
-			<li> MYSQL connection builder using connection.xml </li>
+			<li> MYSQL connection builder using Connection.xml </li>
 			</ol>
 	</small>
 </ul>	
 
 <p></p>
 <h4> -- Project configuration -- </h4>
+
+<h5>Requirements</h5>
+<ul>
+	<li>web browser(chrome)</li>
+	<li>Apache Tomcat (v9)</li>
+	<li>Eclipse IDE (optional)</li>
+	<li>zip Extractor</li>
+	<li>XAMMP (MYSQL)</li>
+</ul>	
+
+<h5>To Run the Project</h5>
 <ol type="1">
-	<li> Create a database. </li>
-	<li> Export latest .sql backup to created database.(important)</li>
-	<li> <b>Extract IT18153682.zip into the C: drive(important).</b> </li>
-	<li> <b>Open and edit Connection.xml file according to your database (important).</b> </li>
-	<li> Run doctors service using apache server  </li>
-	<li> If you are not running on http://localhost/ Please change APIs URL from _URL() (<i>top of the app.js file</i>) function.</li>
-</ol>  
+
+<li> Create a database. </li>
+<br>
+<b><small>From #UTILITY Folder,</small></b>
+<li> Extract the IT18153682.zip into the<b> C drive </b> in your PC. </li>
+<li> Take the MYSQL back-up and import that into MYSQL database using phpmyadmin </li>
+<li> <b>Extracted folder</b> has a file called <b>Connection.xml</b>. Open that and <b>configure your Database information</b>. </li>
+<p></p>
+<li>You can run the server-project(doctors) in the eclipse IDE using tomcat or you can deploy doctors.war(#UTILITY -> aparche09 directory) file into apache directly. </li>
+<li>Enable CORS in apache server <b>(if you only deploy .war file)</b>
+You must configure apache web.xml (in conf directory) according to my <b>web.xml</b> (in #UTILITY -> aparche09 directory)
+<p></p>
+<li>
+If you want, you can change the host name through _URL() (Client->app.js) function in the <b>client side</b>.
+</li>
+</ol>
+ 
 
