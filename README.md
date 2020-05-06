@@ -57,7 +57,7 @@ HelthCare is a hospital management system where the registered users can make ap
 <li> Import given MYSQL back-up to your created database from #UTILITY Directory </li>
 <li> <b>Extracted folder(IT18153682)</b> has a file called <b>Connection.xml</b>. Open that and <b>configure your Database information</b>. </li>
 <p></p>
-<li>You can run the server-project(doctors) in the eclipse IDE using tomcat(recommend) or you can deploy doctors.war(#UTILITY -> aparche09 directory) file into apache directly. </li>
+<li>You can run the server-project(doctors) in the eclipse IDE using tomcat(recommend) or you can deploy doctors.war(#UTILITY -> aparche09 directory) file into apache(weabapps) directly. </li>
 <br>
 <i><b>**If you only deployed .war file</b></i>
 <li>Enable CorsFilter in apache server
