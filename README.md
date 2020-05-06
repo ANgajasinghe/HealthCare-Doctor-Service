@@ -64,15 +64,13 @@ HelthCare is a hospital management system where the registered users can make ap
 You must configure apache's web.xml (in conf directory) according to my <b>web.xml</b> (in #UTILITY -> aparche09 directory)
 <br>
 <small><b><i>**this process might affect to eclipse projects. if it's happened please undo the web.xml changes.and restart apache and eclips </i></b></small> 
-<p></p>
-<li>
-If you want, you can change the host name through _URL() (Client->app.js) function in the <b>client side</b>.
-</li>
+
 </ol>
 <br>
 <ol type="1">
 <u>Client-side configuration</u>
 <li>Open Client Directory</li>
+<li>If you want, you can change the host name through _URL() (Client->app.js) function</li>.
  <li>Run index.html page in the web browser(chrome)
  <br>
  <small><b><i>**Client is not a java project it's only a jQuery project</i></b></small>
