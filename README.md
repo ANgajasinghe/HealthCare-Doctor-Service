@@ -1,5 +1,7 @@
 # PAF-Doctor_Service
 HelthCare is a hospital management system where the registered users can make appointments with the registered doctors who visit the registered hospitals. The users can even make the payments for the appointments online. 
+
+**<small>please read <i><b>"How To Run the Project"</i></b> section to run project.
 <p></p>
 <h4> -- project architecture -- </h4>
 <ul>
@@ -46,16 +48,19 @@ HelthCare is a hospital management system where the registered users can make ap
 
 <h5>To Run the Project</h5>
 <ol type="1">
-
+<u> Server-side configuration </u>
+<br>
 <li> Create a database. </li>
 <br>
-<b><small>From #UTILITY Folder,</small></b>
+<b><small>From #UTILITY Directory,</small></b>
 <li> Extract the IT18153682.zip into the<b> C drive </b> in your PC. </li>
-<li> Take the MYSQL back-up and import that into MYSQL database using phpmyadmin </li>
+<li> Import given MYSQL back-up to your created database from #UTILITY filder </li>
 <li> <b>Extracted folder</b> has a file called <b>Connection.xml</b>. Open that and <b>configure your Database information</b>. </li>
 <p></p>
 <li>You can run the server-project(doctors) in the eclipse IDE using tomcat(recommend) or you can deploy doctors.war(#UTILITY -> aparche09 directory) file into apache directly. </li>
-<li>Enable CorsFilter in apache server <b>(if you only deploy .war file)</b>
+<br>
+<i><b>**If you only deployed .war file</b></i>
+<li>Enable CorsFilter in apache server
 You must configure apache's web.xml (in conf directory) according to my <b>web.xml</b> (in #UTILITY -> aparche09 directory)
 <br>
 <small><b><i>**this process might affect to eclipse projects. if it's happened please undo the web.xml changes.and restart apache and eclips </i></b></small> 
@@ -64,5 +69,14 @@ You must configure apache's web.xml (in conf directory) according to my <b>web.x
 If you want, you can change the host name through _URL() (Client->app.js) function in the <b>client side</b>.
 </li>
 </ol>
+<br>
+<ol type="1">
+<u>Client-side configuration</u>
+<li>Open Client Directory</li>
+ <li>Run index.html page in the web browser(chrome)
+ <br>
+ <small><b><i>**Client is not a java project it's only a jQuery project</i></b></small>
+ </li>
+ </ol>
  
 

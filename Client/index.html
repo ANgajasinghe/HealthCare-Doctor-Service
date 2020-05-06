@@ -77,7 +77,7 @@
     </div>
 
 
-
+    <!--save modle-->
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -93,13 +93,13 @@
                             <input type="text" class="form-control" id="doc_id" name="doc_id" hidden>
                         </div>
                         <div class="form-group">
-                            <label for="doc_reg_no"><b>Doctor Register No</b></label>
+                            <label for="doc_reg_no"><b>Doctor Register No<span class="text-danger">*</span></b></label>
                             <input type="text" class="form-control" id="doc_reg_no" name="doc_reg_no"
                                 placeholder="D0000" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="specification_id"><b>Doctor Specification</b></label>
+                            <label for="specification_id"><b>Doctor Specification<span class="text-danger">*</span></b></label>
                             <div class="form-group">
                                 <select class="form-control" id="specification_id" name="specification_id" required>
                                     <option value="-1">--Select--</option>
@@ -108,18 +108,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_first_name"><b>First Name</b></label>
+                            <label for="doc_first_name"><b>First Name<span class="text-danger">*</span></b></label>
                             <input type="text" class="form-control" id="doc_first_name" name="doc_first_name"
                                 placeholder="Saman" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_last_name"><b>Last Name</b></label>
+                            <label for="doc_last_name"><b>Last Name<span class="text-danger">*</span></b></label>
                             <input type="text" class="form-control" id="doc_last_name" name="doc_last_name"
                                 placeholder="Kumara" required>
                         </div>
 
-                        <label for="radio-panel"><b>Doctor Status</b></label>
+                        <label for="radio-panel"><b>Doctor Status<span class="text-danger">*</span></b></label>
                         <div class="form-check" id="radio-panel">
                             <input class="form-check-input" type="radio" name="doc_status_id" id="radiobtn1" value="1">
                             <label class="form-check-label" for="radiobtn1">
@@ -134,19 +134,19 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <label for="doc_email"><b>Email</b></label>
+                            <label for="doc_email"><b>Email<span class="text-danger">*</span></b></label>
                             <input type="email" class="form-control" id="doc_email" name="doc_email"
                                 placeholder="example@example.com" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_tp1"><b>Telephone 01</b></label>
+                            <label for="doc_tp1"><b>Telephone 01<span class="text-danger">*</span></b></label>
                             <input type="number" class="form-control" id="doc_tp1" name="doc_tp1"
                                 placeholder="0112456789" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_tp2"><b>Telephone 02</b></label>
+                            <label for="doc_tp2"><b>Telephone 02<span class="text-danger">*</span></b></label>
                             <input type="number" class="form-control" id="doc_tp2" name="doc_tp2"
                                 placeholder="0772456789" required>
                         </div>
@@ -158,13 +158,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_address"><b>Address</b></label>
+                            <label for="doc_address"><b>Address<span class="text-danger">*</span></b></label>
                             <input type="text" class="form-control" id="doc_address" name="doc_address"
                                 placeholder="CB 106/107 , Street # 11 , Colombo" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="doc_city"><b>City</b></label>
+                            <label for="doc_city"><b>City<span class="text-danger">*</span></b></label>
                             <input type="text" class="form-control" id="doc_city" name="doc_city" placeholder="Colombo"
                                 required>
                         </div>
