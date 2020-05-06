@@ -213,103 +213,6 @@ $("#btnAdd").on('click', function () {
 });
 
 
-//==========================================CLIENT-MODEL===================================================================================
-
-/*
- *In this section, 
-  I handle all the response validation according to the response algorithm and all the user inputs.
-
-  validateResponse(response):-handle response validation according to the response algorithm.
-  validateForm() :-validate all the user inputs
-                    3 main validation,
-                    i. Empty field validating.
-                    ii.Phone no validating.
-                    iii.Email validating.
- FormToJSON(formArray) :- This an UTILITY method.used to create a new js obj from the form .
-                            input :-serializeArray(name , value)
-
-*/                      
-//validate responses
-function  validateResponse(response) {
-    var resultSet = response;
-    if (resultSet.response_status === 0) {
-        InitAterts("the database is not configured properly <b>Please visit Readme file</b><p></p>"+response.error.ERROR_NAME,"alert-warning");
-        return false;
-    };
-    return true;     
-};
-
-//Handle form validation part
-function validateForm(){
-    //get all form elements
-    var formArray = DOMobj().saveForm.serializeArray();
-    var errorList = "";
-    for (var i = 0; i < formArray.length; i++){
-        // -- i. Empty field validating. ---
-        if((formArray[i]['value'].trim() === "" || formArray[i]['value'].trim() === "-1")
-        && formArray[i]['name'] !== "doc_tp3"
-        && formArray[i]['name'] !== "doc_id"
-        ){
-            errorList = errorList + "<p>" + formArray[i]['name'] + " is Can not empty please fill it. </p>";
-        };
-
-        // -- ii.Phone no validating --
-        if((formArray[i]['name'] === "doc_tp3" || 
-        formArray[i]['name'] === "doc_tp2" || 
-        formArray[i]['name'] === "doc_tp1") && 
-        formArray[i]['value'] !== ""){
-
-            if(!$.isNumeric(formArray[i]['value'].trim()) ||  formArray[i]['value'].trim().length !== 10){
-                if(formArray[i]['name'] === "doc_tp3"){
-                    errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digits.</b></p>";
-                   
-                } else{
-                    errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digits.</b></p>";
-                }
-            } 
-        };
-
-        // --iii.Email validating.--
-        if(formArray[i]['name'] === "doc_email" && formArray[i]['value'] !== "" ){
-            var cheaker01 = formArray[i]['value'].includes("@");
-            var cheaker02 = formArray[i]['value'].includes(".");
-            if(true) {
-                if (cheaker01 === false || cheaker02===false){
-                    errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Please Cheack your Email.</b></p>";
-                };
-                
-            };
-        };
-
-    };
-    var closeBtn = '<p class="text-sm-right"><i class="fas fa-window-close"></i></p>';
-    DOMobj().alerts.warning.show().html(closeBtn + errorList);
-    if(errorList !== ""){
-        return false;
-    };
-    return true
-    
-
-};
-
-//Convert form attributes as Js object
-function FormToJSON(formArray) {
-
-    var oJSON = {};
-    for (var i = 0; i < formArray.length; i++){
-        oJSON[formArray[i]['name']] = formArray[i]['value'].trim();
-    }
-
-    $.each(oJSON, function(key, value){
-        if (value === "" || value === null){
-            delete oJSON[key];
-        }
-    });
-
-    return oJSON;
-};
-
-
 
 //=============================================CONTROLLER=====================================================================================
 /*
@@ -449,6 +352,105 @@ function SaveDoctorInformation(type) {
             console.log(textStatus);
         }
     });
+};
+
+
+
+
+//==========================================CLIENT-MODEL===================================================================================
+
+/*
+ *In this section, 
+  I handle all the response validation according to the response algorithm and all the user inputs.
+
+  validateResponse(response):-handle response validation according to the response algorithm.
+  validateForm() :-validate all the user inputs
+                    3 main validation,
+                    i. Empty field validating.
+                    ii.Phone no validating.
+                    iii.Email validating.
+ FormToJSON(formArray) :- This an UTILITY method.used to create a new js obj from the form .
+                            input :-serializeArray(name , value)
+
+*/                      
+//validate responses
+function  validateResponse(response) {
+    var resultSet = response;
+    if (resultSet.response_status === 0) {
+        InitAterts("Server response error<p></p>"+response.error.ERROR_NAME,"alert-warning");
+        return false;
+    };
+    return true;     
+};
+
+//Handle form validation part
+function validateForm(){
+    //get all form elements
+    var formArray = DOMobj().saveForm.serializeArray();
+    var errorList = "";
+    for (var i = 0; i < formArray.length; i++){
+        // -- i. Empty field validating. ---
+        if((formArray[i]['value'].trim() === "" || formArray[i]['value'].trim() === "-1")
+        && formArray[i]['name'] !== "doc_tp3"
+        && formArray[i]['name'] !== "doc_id"
+        ){
+            errorList = errorList + "<p>" + formArray[i]['name'] + " is Can not empty please fill it. </p>";
+        };
+
+        // -- ii.Phone no validating --
+        if((formArray[i]['name'] === "doc_tp3" || 
+        formArray[i]['name'] === "doc_tp2" || 
+        formArray[i]['name'] === "doc_tp1") && 
+        formArray[i]['value'] !== ""){
+
+            if(!$.isNumeric(formArray[i]['value'].trim()) ||  formArray[i]['value'].trim().length !== 10){
+                if(formArray[i]['name'] === "doc_tp3"){
+                    errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digits.</b></p>";
+                   
+                } else{
+                    errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Phone Number must need 10 digits.</b></p>";
+                }
+            } 
+        };
+
+        // --iii.Email validating.--
+        if(formArray[i]['name'] === "doc_email" && formArray[i]['value'] !== "" ){
+            var cheaker01 = formArray[i]['value'].includes("@");
+            var cheaker02 = formArray[i]['value'].includes(".");
+            if(true) {
+                if (cheaker01 === false || cheaker02===false){
+                    errorList = errorList + "<p>" + formArray[i]['name'] + " <b>Please Cheack your Email.</b></p>";
+                };
+                
+            };
+        };
+
+    };
+    var closeBtn = '<p class="text-sm-right"><i class="fas fa-window-close"></i></p>';
+    DOMobj().alerts.warning.show().html(closeBtn + errorList);
+    if(errorList !== ""){
+        return false;
+    };
+    return true
+    
+
+};
+
+//Convert form attributes as Js object
+function FormToJSON(formArray) {
+
+    var oJSON = {};
+    for (var i = 0; i < formArray.length; i++){
+        oJSON[formArray[i]['name']] = formArray[i]['value'].trim();
+    }
+
+    $.each(oJSON, function(key, value){
+        if (value === "" || value === null){
+            delete oJSON[key];
+        }
+    });
+
+    return oJSON;
 };
 
 
