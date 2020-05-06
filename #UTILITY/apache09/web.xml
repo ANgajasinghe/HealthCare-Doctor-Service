@@ -491,6 +491,11 @@
   <!--   blockContentTypeSniffingEnabled                                    -->
   <!--                       Should the header that blocks content type     -->
   <!--                       sniffing be added to every response? [true]    -->
+  
+  
+  <!-- =============================== CorsFilter ================================== -->
+  
+ <!-- ones you add CorsFilter, tomcat may ont run on properly at Eclipse, To solve that please comment this. --> 
   <filter>
     <filter-name>CorsFilter</filter-name>
     <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
@@ -515,6 +520,9 @@
     <filter-name>CorsFilter</filter-name>
     <url-pattern>/*</url-pattern>
 </filter-mapping>
+
+<!-- comment  to this -->
+
 <!--
     <filter>
         <filter-name>httpHeaderSecurity</filter-name>

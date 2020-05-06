@@ -54,9 +54,11 @@ HelthCare is a hospital management system where the registered users can make ap
 <li> Take the MYSQL back-up and import that into MYSQL database using phpmyadmin </li>
 <li> <b>Extracted folder</b> has a file called <b>Connection.xml</b>. Open that and <b>configure your Database information</b>. </li>
 <p></p>
-<li>You can run the server-project(doctors) in the eclipse IDE using tomcat or you can deploy doctors.war(#UTILITY -> aparche09 directory) file into apache directly. </li>
-<li>Enable CORS in apache server <b>(if you only deploy .war file)</b>
-You must configure apache web.xml (in conf directory) according to my <b>web.xml</b> (in #UTILITY -> aparche09 directory)
+<li>You can run the server-project(doctors) in the eclipse IDE using tomcat(recommend) or you can deploy doctors.war(#UTILITY -> aparche09 directory) file into apache directly. </li>
+<li>Enable CorsFilter in apache server <b>(if you only deploy .war file)</b>
+You must configure apache's web.xml (in conf directory) according to my <b>web.xml</b> (in #UTILITY -> aparche09 directory)
+<br>
+<small><b><i>**this process might affect to eclipse projects. if it's happened please undo the web.xml changes.and restart apache and eclips </i></b></small> 
 <p></p>
 <li>
 If you want, you can change the host name through _URL() (Client->app.js) function in the <b>client side</b>.
