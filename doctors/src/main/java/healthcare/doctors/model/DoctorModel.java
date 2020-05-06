@@ -483,7 +483,7 @@ public class DoctorModel implements IDataModel {
 		dto.setDoc_city((dto.getDoc_city() == null) ? currectDoctorDTO.getDoc_city() : dto.getDoc_city());
 		dto.setDoc_tp1((dto.getDoc_tp1() == null) ? currectDoctorDTO.getDoc_tp1() : dto.getDoc_tp1());
 		dto.setDoc_tp2((dto.getDoc_tp2() == null) ? currectDoctorDTO.getDoc_tp2() : dto.getDoc_tp2());
-		dto.setDoc_tp3((dto.getDoc_tp3() == null) ? currectDoctorDTO.getDoc_tp3() : dto.getDoc_tp3());
+		//dto.setDoc_tp3((dto.getDoc_tp3() == null) ? currectDoctorDTO.getDoc_tp3() : dto.getDoc_tp3());
 		dto.setDoc_email((dto.getDoc_email() == null) ? currectDoctorDTO.getDoc_email() : dto.getDoc_email());
 		dto.setDoc_status_id(
 				(dto.getDoc_status_id() == null) ? currectDoctorDTO.getDoc_status_id() : dto.getDoc_status_id());
