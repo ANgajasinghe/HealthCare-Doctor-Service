@@ -5,7 +5,7 @@ HelthCare is a hospital management system where the registered users can make ap
 <p></p>
 <h4> -- project architecture -- </h4>
 <ul>
-	<li>#UTILIRY :-</li>
+	<li>#UTILITY :-</li>
 	<br>
 	<small><ol>
 			<li>Server(doctors) class diagram</li>
